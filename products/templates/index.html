@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h1>index</h1>
+
+<form method="POST" action={% url 'add_product' %}>
+{% csrf_token %}
+  <div class="form-group">
+    <label for="exampleInputEmail1">Name</label>
+    <input type="text" class="form-control" id="user_name" name="name" aria-describedby="emailHelp" placeholder="Enter Name">
+  </div>
+  <button type="submit" onclick="click1()" class="btn btn-primary">Submit</button>
+</form>
+
+<script>
+
+sessionStorage.clear();
+
+function click1() {
+  sessionStorage.setItem("user_name", document.getElementById("user_name").value);
+  //alert(sessionStorage.getItem("user_name"));
+}
+
+</script>
+</body>
+</html>

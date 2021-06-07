@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h1>index 2</h1>
+<br>
+
+<h1 id="h1"></h1>
+<table id="t1">
+<tr>
+<th>
+name
+</th>
+<th>
+quantity
+</th>
+<th>
+price
+</th>
+</tr>
+<tr>
+<td>--</td>
+<td>--</td>
+<td>--</td>
+</tr>
+</table>
+<button class="open-button" onclick="openForm()">Open Form</button>
+
+<br>
+
+<div class="form-popup" id="myForm">
+  <form action="" method="POST" class="form-container">
+    {% csrf_token %}
+    <select class="form-control" id="p_name" name="p_name" onchange="selectchange()">
+      <option value="none" selected>Select Product</option>
+      {% for p in products %}
+      <option value="{{p.name}}">{{p.name}}</option>
+      {% endfor %}
+    </select>
+
+    <input type="number" placeholder=""  id="price" name="price" readonly>
+
+    <input type="number" placeholder="" value="1"  id="quantity" name="quantity">
+
+    {% comment %} <label for="psw"><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" name="psw" required> {% endcomment %}
+
+    <button type="submit" onclick="addbtn()" class="btn">ADD</button>
+    {% comment %} <button type="button" class="btn cancel" onclick="closeForm()">Close</button> {% endcomment %}
+  </form>
+</div>
+
+<script>
+
+name = sessionStorage.getItem("user_name");
+document.getElementById('h1').innerHTML = name;
+
+function openForm() {
+  document.getElementById("myForm").style.display = "block";
+}
+
+function closeForm() {
+  document.getElementById("myForm").style.display = "none";
+}
+
+function selectchange() {
+    name = document.getElementById("p_name").value;
+    //alert(name);
+    {% for p in products %}
+      if (name == "{{p.name}}")
+      {
+        //alert("{{p.price}}");
+        document.getElementById("price").value = "{{p.price}}";
+      }
+    {% endfor %}
+}
+if (sessionStorage.getItem("i") == null)
+{
+    var i = 0;
+    i = parseInt(i);
+}
+else
+{
+    i = sessionStorage.getItem("i");
+    i = parseInt(i);
+    if (i > 0)
+    {
+        var j;
+        for (j = 1; j <= i; j++) 
+        {
+            var table = document.getElementById("t1");
+            var row = table.insertRow();
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            var cell3 = row.insertCell(2);
+            cell1.innerHTML = sessionStorage.getItem(j.toString()+"product_name");
+            cell2.innerHTML = sessionStorage.getItem(j.toString()+"product_quantity");
+            cell3.innerHTML = sessionStorage.getItem(j.toString()+"product_price");
+        }
+    
+    }
+}
+
+
+
+function addbtn() {
+    i = parseInt(i);
+    i = i+1;
+    sessionStorage.setItem("i", i);
+    //alert(i);
+    name = document.getElementById("p_name").value;
+    price = document.getElementById("price").value;
+    quantity = document.getElementById("quantity").value;
+    sessionStorage.setItem(i.toString()+"product_name", name);
+    sessionStorage.setItem(i.toString()+"product_quantity", quantity);
+    sessionStorage.setItem(i.toString()+"product_price", price);
+
+    
+}
+
+
+
+function click1() {
+    name = sessionStorage.getItem("user_name"); 
+    //alert("name");
+  //sessionStorage.setItem("user_name", document.getElementById("name").value);
+  //alert(sessionStorage.getItem("user_name"));
+}
+
+</script>
+</body>
+</html>

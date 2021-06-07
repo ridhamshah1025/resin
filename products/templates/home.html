@@ -1,10 +1,27 @@
 <!DOCTYPE html>
 <html>
 <body>
+<h1>Home</h1>
+{% comment %} {{ request.session.name }} {% endcomment %}
 
-<p><b>This text is bold</b></p>
-<p><i>This text is italic</i></p>
-<p>This is<sub> subscript</sub> and <sup>superscript</sup></p>
+<form method="POST" action={% url 'add_products' %}>
+{% csrf_token %}
+  <div class="form-group">
+    <label for="exampleInputEmail1">Name</label>
+    <input type="text" class="form-control" name="name" aria-describedby="emailHelp" placeholder="Enter Name">
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+{% comment %} <div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Select Product
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a class="dropdown-item" href="#">Action</a>
+  </div>
+</div>  {% endcomment %}
+
 
 </body>
 </html>

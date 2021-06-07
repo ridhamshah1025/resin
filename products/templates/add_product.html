@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.form-popup {
+  display: none;
+  {% comment %} position: fixed;
+  bottom: 0;
+  right: 15px;
+  border: 3px solid #f1f1f1;
+  z-index: 9; {% endcomment %}
+}
+</style>
+</head>
+<body>
+<h1>Add Product</h1>
+User Id: {{ request.session.user_id }}
+<br>
+{% for c in all_cart_products %}
+        <li>{{ c.product.name }}-{{c.quantity}}-{{c.total_price}}</li>
+{% endfor %}
+<br>
+{% comment %} <form method="POST" action={% url 'auth' %}>
+  <div class="form-group">
+    <label for="exampleInputEmail1">Name</label>
+    <input type="text" class="form-control" aria-describedby="emailHelp" placeholder="Enter Name">
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form> {% endcomment %}
+
+{% comment %} <div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Select Product
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a class="dropdown-item" href="#">Action</a>
+  </div>
+</div>  {% endcomment %}
+
+{% comment %} {% for p in products %}
+        <li><a href="#">{{ p.name }}</a></li>
+{% endfor %} {% endcomment %}
+<br>
+
+<button class="open-button" onclick="openForm()">Open Form</button>
+
+<br>
+
+<div class="form-popup" id="myForm">
+  <form action="{% url 'add_cart' %}" method="POST" class="form-container">
+    {% csrf_token %}
+    <select class="form-control" id="p_name" name="p_name" onchange="selectchange()">
+      <option value="none" selected>Select Product</option>
+      {% for p in products %}
+      <option value="{{p.name}}">{{p.name}}</option>
+      {% endfor %}
+    </select>
+
+    <input type="number" placeholder=""  id="price" name="price" readonly>
+
+    <input type="number" placeholder="" value="1"  id="quantity" name="quantity">
+
+    {% comment %} <label for="psw"><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" name="psw" required> {% endcomment %}
+
+    <button type="submit" class="btn">ADD</button>
+    {% comment %} <button type="button" class="btn cancel" onclick="closeForm()">Close</button> {% endcomment %}
+  </form>
+</div>
+
+<script>
+function openForm() {
+  document.getElementById("myForm").style.display = "block";
+}
+
+function closeForm() {
+  document.getElementById("myForm").style.display = "none";
+}
+
+function selectchange() {
+    name = document.getElementById("p_name").value;
+    //alert(name);
+    {% for p in products %}
+      if (name == "{{p.name}}")
+      {
+        //alert("{{p.price}}");
+        document.getElementById("price").value = "{{p.price}}";
+      }
+    {% endfor %}
+}
+
+</script>
+</body>
+</html>

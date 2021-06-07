@@ -18,4 +18,8 @@ from django.urls import path
 from products import views
 urlpatterns = [
     path('', views.home,name="home"),
+    path('add_products/', views.add_products,name="add_products"),
+    path('add_cart/', views.add_cart,name="add_cart"),
+    path('index/', views.index,name="index"),
+    path('add_product/', views.add_product,name="add_product"),
 ]
